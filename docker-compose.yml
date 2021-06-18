@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  wordpress:
+    container_name: "wordpress-backend"
+    build:
+      context: ./_dev/Docker-wordpress
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    volumes:
+      - ./_dev/local.config/sample-data/:/tmp/sample-data
+      - ./_dev/wordpress-root:/var/www/html
+      - ./theme:/var/www/html/wp-content/themes/nc-theme
+    restart: always
+    environment:
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: password
+      WORDPRESS_DEBUG: 1
+
+  mysql:
+    image: mariadb:10.5.1
+    container_name: "mysql-wordpress-backend"
+    volumes:
+      - 'mariadb_data:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=wordpress
+    restart: always
+
+  nginx:
+    image: nginx:1.17.9
+    container_name: "nginx-wordpress-backend"
+    depends_on:
+      - wordpress
+    ports:
+      - '80:80'
+    volumes:
+      - ./_dev/local.config/nginx:/etc/nginx/conf.d
+      - ./_dev/wordpress-root:/var/www/html
+      - ./theme:/var/www/html/wp-content/themes/nc-theme
+    restart: always
+
+volumes:
+  mariadb_data:
+    driver: local

@@ -1,0 +1,5 @@
+/.vscode
+/.idea
+/.env
+/_dev/wordpress-root
+.DS_Store
