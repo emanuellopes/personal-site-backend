@@ -1,4 +1,4 @@
-# WordPress Backend
+# Personal website
 
 This project is a boilerplate to create your own theme for WordPress from scratch.
 
@@ -8,9 +8,3 @@ This project is a boilerplate to create your own theme for WordPress from scratc
 3. [Development](theme/docs/development.md)
 4. [Code Quality](theme/docs/code-quality-and-style.md)
 5. [Project Structure](theme/docs/project-structure.md)
-
-Note: after checkout this boilerplate please search for all Todo: in the project.
-All Todos must be updated.
-
-
-# personal-site-backend
